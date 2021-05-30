@@ -52,7 +52,65 @@
     menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
   };
 
-  const app = {
+  class Product{
+		constructor(id, data){
+			const thisProduct = this;
+
+			thisProduct.id = id;
+			thisProduct.data = data;
+			
+			thisProduct.renderInMenu();
+			thisProduct.initAccordion();
+			}
+			
+		renderInMenu(){
+			const thisProduct = this;
+
+			// wygenerować kod HTML pojedynczego produktu,
+			const generateHTML = templates.menuProduct(thisProduct.data);		 
+
+			// stworzyć element DOM na podstawie tego kodu produktu,
+			thisProduct.element = utils.createDOMFromHTML(generateHTML);                     
+
+			// znaleźć na stronie kontener menu,
+			const menuContainer = document.querySelector(select.containerOf.menu);
+
+			// wstawić stworzony element DOM do znalezionego kontenera menu
+			menuContainer.appendChild(thisProduct.element);
+		}
+		
+		initAccordion(){
+			const thisProduct = this; 																  
+			const clickableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable); 
+			
+			clickableTrigger.addEventListener('click', function(event){
+				event.preventDefault();
+				
+				const activeProduct = document.querySelector(select.all.menuProductsActive);
+				
+				// znaleźć aktywny produkt i (o ile istnieje) zabrać mu klasę active 
+				if(activeProduct && activeProduct !== thisProduct.element){ 
+					activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
+				} 
+				//nadawać lub odbierać (toggle) klasę zdefiniowaną w active na elemencie bieżącego produktu 
+				thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
+			});
+		}
+  };
+ 
+const app = {
+initMenu: function(){
+
+	const thisApp = this; 
+	for(let productData in thisApp.data.products){
+		new Product(productData, thisApp.data.products[productData]);
+	}
+},
+initData: function(){
+	const thisApp = this;
+
+	thisApp.data = dataSource; 
+},
     init: function(){
       const thisApp = this;
       console.log('*** App starting ***');
@@ -60,6 +118,8 @@
       console.log('classNames:', classNames);
       console.log('settings:', settings);
       console.log('templates:', templates);
+	  thisApp.initData();
+      thisApp.initMenu();
     },
   };
 
