@@ -53,15 +53,20 @@
   };
 
   class Product{
-		constructor(id, data){
-			const thisProduct = this;
+	constructor(id, data){
+		const thisProduct = this;
 
-			thisProduct.id = id;
-			thisProduct.data = data;
+		thisProduct.id = id;
+		thisProduct.data = data;
 			
-			thisProduct.renderInMenu();
-			thisProduct.initAccordion();
-			}
+		thisProduct.renderInMenu();
+		thisProduct.getElements();
+		thisProduct.initAccordion();
+		thisProduct.initOrderForm();
+		thisProduct.processOrder();
+		
+		console.log('thisProduct', thisProduct);
+	}
 			
 		renderInMenu(){
 			const thisProduct = this;
@@ -79,11 +84,20 @@
 			menuContainer.appendChild(thisProduct.element);
 		}
 		
+		getElements(){
+			const thisProduct = this;
+
+			thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable); console.log('thisProduct.accordionTrigger*', thisProduct.accordionTrigger);
+			thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form); 					console.log('thisProduct.form*',thisProduct.form);
+			thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);				console.log('thisProduct.formInputs*',thisProduct.formInputs );
+			thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);		console.log('thisProduct.cartButton*',thisProduct.cartButton);
+			thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);		console.log('thisProduct.priceElem*',thisProduct.priceElem);
+}
+		
 		initAccordion(){
 			const thisProduct = this; 																  
-			const clickableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable); 
 			
-			clickableTrigger.addEventListener('click', function(event){
+			thisProduct.accordionTrigger.addEventListener('click', function(event){
 				event.preventDefault();
 				
 				const activeProduct = document.querySelector(select.all.menuProductsActive);
@@ -96,32 +110,81 @@
 				thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
 			});
 		}
-  };
+		
+		initOrderForm(){
+			//metoda odpowiedzialna za dodanie listenerów eventów do formularza, jego kontrolek, oraz guzika dodania do koszyka
+			const thisProduct = this; 									
+			
+			thisProduct.form.addEventListener('submit', function(event){
+				event.preventDefault();
+				thisProduct.processOrder();
+			}
+			);
+			for(let input of thisProduct.formInputs){
+				input.addEventListener('change', function(){
+					thisProduct.processOrder();           
+				}
+				);								
+			}
+			thisProduct.cartButton.addEventListener('click', function(event){
+				event.preventDefault();
+				thisProduct.processOrder();
+			}
+			);
+		}
+		
+		processOrder(){
+			const thisProduct = this;										
+			
+			const fromData = utils.serializeFormToObject(thisProduct.form);
+
+			let price = thisProduct.data.price; 									
+			
+			for(let paramId in thisProduct.data.params){
+				const param = thisProduct.data.params[paramId]; 														
+				
+				for(let optionId in param.options){
+					const option = param.options[optionId];
+
+					if(fromData[paramId].includes(optionId)){					
+						if(!option.hasOwnProperty('default')){
+							price = price + option.price;
+						}
+					} else {
+						if(option.hasOwnProperty('default')){
+							price = price - option.price;
+						}
+					}
+				}
+			}
+			thisProduct.priceElem.innerHTML = price;
+		}
+}
  
 const app = {
-initMenu: function(){
+	initMenu: function(){
 
-	const thisApp = this; 
-	for(let productData in thisApp.data.products){
-		new Product(productData, thisApp.data.products[productData]);
-	}
-},
-initData: function(){
-	const thisApp = this;
+		const thisApp = this; 
+		for(let productData in thisApp.data.products){
+			new Product(productData, thisApp.data.products[productData]);
+		}
+	},
+	initData: function(){
+		const thisApp = this;
 
-	thisApp.data = dataSource; 
-},
-    init: function(){
-      const thisApp = this;
-      console.log('*** App starting ***');
-      console.log('thisApp:', thisApp);
-      console.log('classNames:', classNames);
-      console.log('settings:', settings);
-      console.log('templates:', templates);
-	  thisApp.initData();
-      thisApp.initMenu();
-    },
-  };
+		thisApp.data = dataSource; 
+	},
+	init: function(){
+		const thisApp = this;
+		console.log('*** App starting ***');
+		console.log('thisApp:', thisApp);
+		console.log('classNames:', classNames);
+		console.log('settings:', settings);
+		console.log('templates:', templates);
+		thisApp.initData();
+		thisApp.initMenu();
+		}
+	};
 
-  app.init();
+	app.init();
 }
