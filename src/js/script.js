@@ -87,11 +87,13 @@
 		getElements(){
 			const thisProduct = this;
 
-			thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable); console.log('thisProduct.accordionTrigger*', thisProduct.accordionTrigger);
-			thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form); 					console.log('thisProduct.form*',thisProduct.form);
-			thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);				console.log('thisProduct.formInputs*',thisProduct.formInputs );
-			thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);		console.log('thisProduct.cartButton*',thisProduct.cartButton);
-			thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);		console.log('thisProduct.priceElem*',thisProduct.priceElem);
+			thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable); 
+			thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form); 					
+			thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);				
+			thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);		
+			thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+			thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper); 
+			console.log('img-wrap',thisProduct.imageWrapper);
 }
 		
 		initAccordion(){
@@ -145,14 +147,24 @@
 				
 				for(let optionId in param.options){
 					const option = param.options[optionId];
-
-					if(fromData[paramId].includes(optionId)){					
+					
+					const optionSelected = fromData[paramId].includes(optionId);
+					
+					const optionImg = thisProduct.imageWrapper.querySelector('.' + paramId + '-' + optionId); 
+					
+					if(optionSelected){					
 						if(!option.hasOwnProperty('default')){
 							price = price + option.price;
+						}
+						if(optionImg) {
+							optionImg.classList.add(classNames.menuProduct.imageVisible);
 						}
 					} else {
 						if(option.hasOwnProperty('default')){
 							price = price - option.price;
+						}
+						if(optionImg) {
+							optionImg.classList.remove(classNames.menuProduct.imageVisible);
 						}
 					}
 				}
