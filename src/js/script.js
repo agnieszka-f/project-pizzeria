@@ -170,12 +170,17 @@
 					}
 				}
 			}
+			price *=thisProduct.amountWidget.value;
 			thisProduct.priceElem.innerHTML = price;
 		}
 		initAmountWidget(){
 			const thisProduct = this;
 			
 			thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
+			
+			thisProduct.amountWidgetElem.addEventListener('updated', function(){
+				thisProduct.processOrder();
+			});
 		}
 }
 	class AmountWidget{
@@ -194,6 +199,7 @@
 			thisWidget.element = element;
 			
 			thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
+			thisWidget.input.value = settings.amountWidget.defaultValue; 
 			thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
 			thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
 		}
@@ -204,6 +210,7 @@
 			
 			if(!isNaN(newValue) && newValue !== thisWidget.value && newValue <= settings.amountWidget.defaultMax + 1 && newValue >= settings.amountWidget.defaultMin -1){
 				thisWidget.value = newValue;
+				thisWidget.announce();
 			}
 			thisWidget.input.value = thisWidget.value;
 		}
@@ -214,15 +221,19 @@
 				thisWidget.setValue(thisWidget.input.value);
 			});
 			thisWidget.linkDecrease.addEventListener('click', function(){
-				//if(thisWidget.value >= settings.amountWidget.defaultMin){
+
 					thisWidget.setValue(thisWidget.value - 1);
-				//}
 			});
 			thisWidget.linkIncrease.addEventListener('click', function(){ 
-				///if(thisWidget.value <= settings.amountWidget.defaultMax){
+				
 					thisWidget.setValue(thisWidget.value + 1);
-				//}
 			});
+		}
+		announce(){ 
+			const thisWidget = this;
+			const event = new Event('updated');
+			
+			thisWidget.element.dispatchEvent(event);
 		}
 	}
 	const app = {
