@@ -70,7 +70,6 @@ class Cart{
 			
 			thisCart.update();
 			
-			console.log('koszyk po aktualizacji: ', thisCart);
 		}
 		update(){
 			const thisCart = this;
@@ -126,7 +125,6 @@ class Cart{
 			for(let prod of thisCart.products){
 				payload.products.push(prod.getData());
 			}
-			console.log(payload);
 			
 			const options = {
 				method: 'POST', 

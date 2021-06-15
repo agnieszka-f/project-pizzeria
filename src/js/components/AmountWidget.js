@@ -1,7 +1,7 @@
 import {settings, select} from '../settings.js';
 
 class AmountWidget{
-		constructor(element){
+		constructor(element){ 
 			const thisWidget = this;
 			
 			thisWidget.getElements(element);
