@@ -3,12 +3,14 @@ import {select, settings} from '../settings.js';
 import {utils} from '../utils.js';
 
 class HourPicker extends BaseWidget{
-  constructor(wrapper){
+  constructor(wrapper){ console.log('wrapper',wrapper);
     super(wrapper, settings.hours.open);
     const thisWidget = this;
-
+    
     thisWidget.dom.input = thisWidget.dom.wrapper.querySelector(select.widgets.hourPicker.input);
+   
     thisWidget.dom.output = thisWidget.dom.wrapper.querySelector(select.widgets.hourPicker.output);
+   
     thisWidget.initPlugin();
     thisWidget.value = thisWidget.dom.input.value;
   }
@@ -17,7 +19,7 @@ class HourPicker extends BaseWidget{
     const thisWidget = this;
     // eslint-disable-next-line no-undef
     rangeSlider.create(thisWidget.dom.input);
-    thisWidget.dom.input.addEventListener('input', function(){
+    thisWidget.dom.input.addEventListener('input', function(){ 
       thisWidget.value = thisWidget.dom.input.value;
     });
   }

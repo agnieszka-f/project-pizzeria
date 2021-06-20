@@ -19,11 +19,11 @@ class BaseWidget{
 
     set value(value){  
         const thisWidget = this;
-        
+
         const newValue = thisWidget.parseValue(value);
-        
-        if(!isNaN(newValue) && newValue !== thisWidget.correctValue && thisWidget.isValid(newValue)){
-            thisWidget.correctValue = newValue;
+       
+        if(thisWidget.isValid(newValue) && newValue !== thisWidget.correctValue && thisWidget.isValid(newValue)){
+            thisWidget.correctValue = newValue; 
             thisWidget.announce();
         } 
         thisWidget.renderValue(); 
