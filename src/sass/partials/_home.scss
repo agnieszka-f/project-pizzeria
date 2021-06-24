@@ -1,0 +1,161 @@
+.home-page {
+    padding: ($base-size * 3) 0;
+  }
+  
+  .section {
+    margin: ($base-size / 2) 0;
+    background: $color-light;
+    border-bottom: 1px solid lighten($color-dark, 70%);
+    border-radius: $radius;
+    @include flex(column, center, space-between);
+  }
+  .section-img { 
+    @include flex(row, center, space-between);
+    width: 100%;
+  }
+  .element {
+    min-width: 345px;
+    min-height: 150px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: space;
+    border-radius: $radius;
+    position:relative;
+  }
+  .img-1{
+    background-image: url("../images/pizza-1.jpg");
+  }
+  .img-2{
+    background-image: url("../images/pizza-2.jpg");
+  }
+  .img-3{
+    background-image: url("../images/pizza-3.jpg");
+  }
+  .img-4{
+    background-image: url("../images/pizza-4.jpg");
+  }
+  .img-5{
+    background-image: url("../images/pizza-5.jpg");
+  }
+  .img-6{
+    background-image: url("../images/pizza-6.jpg");
+  }
+  .img-7{
+    background-image: url("../images/pizza-7.jpg");
+  }
+  .img-8{
+    background-image: url("../images/pizza-8.jpg");
+  }
+  .img-9{
+    background-image: url("../images/pizza-9.jpg");
+  }
+  .open{
+      position:relative;
+      width: 100%;
+      min-width: 690px;
+      min-height: 150px;
+      background:$color-main;
+      border-radius: $radius;
+      margin-top: 1%;
+  }
+  .element h3, p, .open h3, p{
+      color: white;
+      position: absolute;
+      transform: translate(-50%, -50%);
+  }
+  .element h3, p{
+    transition: all 1s;
+  }
+  .element h3, .open h3{
+    font-size: 20px;
+    left: 50%;
+    text-transform: uppercase;
+    font-family: $font-header;
+  }
+  .element h3{
+    top: 35%;
+  }
+  .element:hover h3{
+    top: 20%;
+  }
+  .element p{
+    visibility: hidden;
+    font-size: 14px;
+    top: 80%;
+    left: 50%;
+    font-family: $font-text;
+    white-space: nowrap;
+  }
+  .element:hover p{
+    visibility: visible;
+    top: 50%;
+  }
+  .open h3{
+      top: 20%;
+  }
+  .open p{
+    text-transform: uppercase;
+    top: 60%;
+    left: 50%;
+    font-family: $font-text;
+  }
+.section:last-child{
+  background: lighten($color-dark, 75%);
+}
+.row{ 
+  display: flex;
+}
+.row > div {
+  position: relative;
+  height: 230px;
+  width: 230px;
+  background-position: center;
+  background-size: cover;
+  border-radius: $radius;
+  margin: 2px;
+}
+.row > div::after{
+  content: '';
+  display: none;
+  background:red;
+  opacity: 0.2;
+  width: 100%;
+  height: 100%;
+}
+.row > div:hover::after{
+  display: block;
+}
+.fas, .fab{
+  visibility: hidden;
+  color: white;
+  font-size: 36px;
+  position: absolute;
+  top:50%;
+  transform: translate(-50%, -50%);
+}
+.fas{
+  left: 40%;
+}
+.fab{
+  left: 60%;
+}
+.row > div:hover{
+  .fas, .fab{
+    visibility: visible;
+    color: $color-main;
+    transition: all 1s;
+  }
+}
+.main-carousel{
+  margin-top: 8%;
+  margin-bottom: 10%;
+}
+.carousel-cell {
+  margin-right: 20px;
+  overflow: hidden;
+  height: 300px;
+}
+.carousel-cell img {
+  display: block;
+  height: 300px;
+}
