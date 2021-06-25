@@ -1,19 +1,20 @@
+#home{
+  background: $color-light;
+}
 .home-page {
     padding: ($base-size * 3) 0;
   }
-  
-  .section {
+  .section-home-page {
     margin: ($base-size / 2) 0;
-    background: $color-light;
     border-bottom: 1px solid lighten($color-dark, 70%);
     border-radius: $radius;
     @include flex(column, center, space-between);
-  }
-  .section-img { 
+  } 
+  .home-page-img { 
     @include flex(row, center, space-between);
     width: 100%;
   }
-  .element {
+  .element-home-page {
     min-width: 345px;
     min-height: 150px;
     background-position: center;
@@ -21,6 +22,7 @@
     background-repeat: space;
     border-radius: $radius;
     position:relative;
+    cursor: pointer;
   }
   .img-1{
     background-image: url("../images/pizza-1.jpg");
@@ -49,7 +51,7 @@
   .img-9{
     background-image: url("../images/pizza-9.jpg");
   }
-  .open{
+  .info-about-open{
       position:relative;
       width: 100%;
       min-width: 690px;
@@ -58,48 +60,48 @@
       border-radius: $radius;
       margin-top: 1%;
   }
-  .element h3, p, .open h3, p{
+  .element-home-page h3, .element-home-page p, .info-about-open h3, .info-about-open p{
       color: white;
       position: absolute;
       transform: translate(-50%, -50%);
   }
-  .element h3, p{
+  .element-home-page h3, .element-home-page p{
     transition: all 1s;
   }
-  .element h3, .open h3{
+  .element-home-page h3, .info-about-open h3{
     font-size: 20px;
     left: 50%;
     text-transform: uppercase;
     font-family: $font-header;
   }
-  .element h3{
+  .element-home-page h3{
     top: 35%;
   }
-  .element:hover h3{
+  .element-home-page:hover h3{
     top: 20%;
   }
-  .element p{
+  .element-home-page p{
     visibility: hidden;
     font-size: 14px;
     top: 80%;
     left: 50%;
     font-family: $font-text;
     white-space: nowrap;
-  }
-  .element:hover p{
+  } 
+  .element-home-page:hover p{
     visibility: visible;
     top: 50%;
   }
-  .open h3{
+  .info-about-open h3{
       top: 20%;
   }
-  .open p{
+  .info-about-open p{
     text-transform: uppercase;
     top: 60%;
     left: 50%;
     font-family: $font-text;
   }
-.section:last-child{
+.section-home-page:last-child{
   background: lighten($color-dark, 75%);
 }
 .row{ 
@@ -125,7 +127,7 @@
 .row > div:hover::after{
   display: block;
 }
-.fas, .fab{
+.row .fas, .row .fab{
   visibility: hidden;
   color: white;
   font-size: 36px;
@@ -133,10 +135,10 @@
   top:50%;
   transform: translate(-50%, -50%);
 }
-.fas{
+.row .fas{
   left: 40%;
 }
-.fab{
+.row .fab{
   left: 60%;
 }
 .row > div:hover{
@@ -147,15 +149,27 @@
   }
 }
 .main-carousel{
-  margin-top: 8%;
+  margin-top: 6%;
   margin-bottom: 10%;
+  background: $color-light;
 }
 .carousel-cell {
-  margin-right: 20px;
-  overflow: hidden;
-  height: 300px;
+  width: 100%;
+  height: 250px;
+  padding-right: 10px;
+  counter-increment: gallery-cell;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: $color-light;
 }
 .carousel-cell img {
   display: block;
-  height: 300px;
+  object-fit: cover;
+  width: 40%;
+  height: 220px;
+}
+.citation{
+  width: 45%;
+  padding-left: 5%;
 }
