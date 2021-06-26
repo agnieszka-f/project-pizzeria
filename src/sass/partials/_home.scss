@@ -149,8 +149,8 @@
   }
 }
 .main-carousel{
-  margin-top: 6%;
-  margin-bottom: 10%;
+  margin-top: 10%;
+  margin-bottom: 14%;
   background: $color-light;
 }
 .carousel-cell {
@@ -168,6 +168,7 @@
   object-fit: cover;
   width: 40%;
   height: 220px;
+  border-radius: $radius;
 }
 .citation{
   width: 45%;

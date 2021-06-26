@@ -19,11 +19,12 @@ class Home{
         const thisHome = this;
 
         thisHome.dom.links.addEventListener('click', function(event){
-            const clickedLink = event.target.getAttribute('id');
-
-           if(clickedLink === 'order' || clickedLink === 'booking'){
-            app.activatePage(clickedLink);
-           }
+ 
+            if(event.target.getAttribute('link') != null){
+                app.activatePage(event.target.getAttribute('link')); 
+            } else if (event.target.offsetParent.getAttribute('link') != null){
+                app.activatePage(event.target.offsetParent.getAttribute('link'));
+            }
         });
     }
     initCarousel(){
